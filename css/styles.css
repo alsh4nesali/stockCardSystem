@@ -1,0 +1,61 @@
+
+		*{
+			font-family: 'Nunito Sans', sans-serif;
+		}
+
+		h1,h3{
+			text-align: center;
+			margin: 2%;
+		}
+
+		label{
+			padding: 0.5%;
+			font-weight: bold;
+		}
+
+		.ulabel{
+			display: flex;
+		}
+
+
+
+		.field_set{
+			margin-left: 10%;
+			margin-top: 3%;
+			margin-right: 10%;
+			border-color: #F00;
+  			border-style: solid;
+		}
+
+		.field_set legend{
+			font-size: 35px;
+			font-weight: bold;
+			text-align: center;
+			letter-spacing: 2px;
+		}
+
+		.img{
+			text-align: center;
+		}
+
+		.img img{
+			padding: 2%;
+			
+			margin: 0 auto;
+		}
+
+		.img p{
+			text-align: center;
+			font-weight: bold;
+		}
+
+		.insertbtn{
+			float: right;
+		}
+
+		.swal-text {
+			  text-align: center;
+			  
+			  font-weight: bold;
+			}
+
