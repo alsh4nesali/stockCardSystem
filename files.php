@@ -35,7 +35,7 @@
           <a class="nav-link" href="index.php">Add Data</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="files.php">Previous Files</a>
+          <a class="nav-link" href="index.php">Previous Files</a>
         </li>
       </ul>
       <!--<form class="d-flex" role="search">
@@ -45,6 +45,8 @@
     </div>
   </div>
 </nav>
+
+<h1 class="fw-bold">Archived Information</h1>
 
 
                               <table class="table table-bordered text-center fw-bold" width="100%" cellspacing="0" style="color: black;">
@@ -58,14 +60,14 @@
                                      <th>Unit of Measurement</th> 
                                      <th>Stock No.</th>
                                      <th>Re-order Point</th>
+                                     <th>View</th>
                                      <th>PRINT</th>
-                                     <th>REMOVE</th>
                                </tr>  
                                     </thead>
     <?php
 include 'connection.php';
 
-$result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE flag =  '0' ORDER BY id DESC");
+$result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE flag =  '1' ORDER BY id DESC");
 
 
 while($row = mysqli_fetch_array($result))
@@ -84,16 +86,12 @@ while($row = mysqli_fetch_array($result))
 
 
                  echo"   <td>
+                    <a rel='facebox' target='_blank' href='view.php?id=".$row['id']."' style='text-decoration:none;'>View Info</a>
+                </td>";
+                 echo"   <td>
                     <a rel='facebox' target='_blank' href='printing.php?id=".$row['id']."'>
                     <button type='button' class='btn btn-warning genbtn fw-bold'> <i class='fa fa-print' style='font-size:36px' alt='PRINT'></i> </button></a>
                 </td>";
-
-                echo'    <td>
-                    <a href="" data-id="'.$row['id'].'"  class="btn btn-danger trash fw-bold"  data-bs-toggle="modal"
-                data-bs-target="#logoutModal"> <i class="fa fa-remove trash" style="font-size:36px" ></i></a>
-                </td>';
-                
-
 
                 echo "</tr>";
   }

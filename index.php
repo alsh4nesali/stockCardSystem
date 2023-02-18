@@ -77,69 +77,69 @@ if(isset($_POST['send']))
 
 	  <div class="col-md-6">
 	    <label for="inputEmail4" class="form-label">Entity Name</label>
-	    <input type="text" name="entity" class="form-control" id="inputEmail4">
+	    <input type="text" name="entity" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
 	    <label for="inputEmail4" class="form-label">Fund Cluster</label>
-	    <input type="text" name="cluster" class="form-control" id="inputEmail4">
+	    <input type="text" name="cluster" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
 	    <label for="inputEmail4" class="form-label">Item</label>
-	    <input type="text" name="item" class="form-control" id="inputEmail4">
+	    <input type="text" name="item" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
 	    <label for="inputPassword4" class="form-label">Description</label>
-	    <input type="text" name="descrip" class="form-control" id="inputPassword4">
+	    <input type="text" name="descrip" class="form-control" id="inputPassword4" required>
 	  </div>
 
 	  <div class="col-md-6">
 	    <label for="inputEmail4" class="form-label">Unit of Measurement</label>
-	    <input type="text" name="unit" class="form-control" id="inputEmail4">
+	    <input type="text" name="unit" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
 	    <label for="inputEmail4" class="form-label">Stock No.</label>
-	    <input type="text" name="stock_no" class="form-control" id="inputEmail4">
+	    <input type="text" name="stock_no" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Re-order Point.</label>
-	    <input type="text" name="re_order" class="form-control" id="inputCity">
+	    <input type="text" name="re_order" class="form-control" id="inputCity" required>
 	  </div>
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Date</label>
-	    <input type="text" name="date" value="<?php echo date("d-m-Y"); ?>" class="form-control" id="inputCity">
+	    <input type="text" name="date" value="<?php echo date("d-m-Y"); ?>" class="form-control" id="inputCity" required>
 	  </div>
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Reference</label>
-	    <input type="text" name="reference" class="form-control" id="inputCity">
+	    <input type="text" name="reference" class="form-control" id="inputCity" required>
 	  </div>
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Receipt/Qty</label>
-	    <input type="text" name="receipt_qty" class="form-control" id="inputCity">
+	    <input type="text" name="receipt_qty" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Issue/Qty</label>
-	    <input type="text" name="issue_qty" class="form-control" id="inputCity">
+	    <input type="text" name="issue_qty" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Issue/Office</label>
-	    <input type="text" name="issue_office" class="form-control" id="inputCity">
+	    <input type="text" name="issue_office" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Balance/Qty</label>
-	    <input type="text" name="balance_qty" class="form-control" id="inputCity">
+	    <input type="text" name="balance_qty" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">No. of Days to Consume</label>
-	    <input type="text" name="consume" class="form-control" id="inputCity">
+	    <input type="text" name="consume" class="form-control" id="inputCity" required>
 	  </div>
 
 
