@@ -1,3 +1,46 @@
+<?php
+
+include('connection.php');
+
+if(isset($_POST['editinfo']))
+{
+
+    $id = $_POST['id'];
+
+    $entity = $_POST['entity'];
+    $cluster = $_POST['cluster'];
+    $descrip = $_POST['descrip'];
+    $item = $_POST['item'];
+    $unit = $_POST['unit'];
+    $stock_no = $_POST['stock_no'];
+    $re_order = $_POST['re_order'];
+    $date = $_POST['date'];
+
+    $query = "UPDATE tbl_stocks SET entity_name = '$entity' ,fund_cluster = '$cluster',item = '$item' ,descrip = '$descrip', unit_m = '$unit', stock_no = '$stock_no', re_order = '$re_order', date = '$date' WHERE id='$id'";
+
+    $query_run = mysqli_query($connection, $query);
+
+    if($query_run)
+        {
+        $var = 'Information has been saved!';
+        $message = 'Stock card information has been changed...';
+
+            echo '<script type="text/javascript">';
+            echo "setTimeout(function () { swal('$var','$message','success')";
+            echo '}, 1000);</script>';
+        }
+        else
+        {
+        $var = 'Error!';
+        $message = 'Error occured while editing the information please try again after a few second...';
+
+            echo '<script type="text/javascript">';
+            echo "setTimeout(function () { swal('$var','$message','error')";
+            echo '}, 1000);</script>';
+        }
+
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +50,7 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+    <script src="js/sweetalert.min.js"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap" rel="stylesheet">
@@ -14,13 +58,18 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <style>
+        body{
+            background-color: #BDCDD6 !important;
+        }
+    </style>
 
 </head>
 
 <body>
 
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary p-4">
+<nav class="navbar navbar-expand-lg " style="background-color: #BDCDD6;">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="index.php"><img src="images/dpwh.svg" width="80px"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,11 +93,11 @@
       </form>-->
     </div>
   </div>
-</nav>
+</nav><hr>
 
 
                               <table class="table table-bordered text-center fw-bold" width="100%" cellspacing="0" style="color: black;">
-                                    <thead class="">
+                                    <thead class="table-dark">
                                <tr>  
                                     <th>Date</th>
                                     <th>Entity Name</th>  
@@ -59,7 +108,8 @@
                                      <th>Stock No.</th>
                                      <th>Re-order Point</th>
                                      <th>PRINT</th>
-                                     <th>REMOVE</th>
+                                     <th>EDIT</th>
+                                     <th>DELETE</th>
                                </tr>  
                                     </thead>
     <?php
@@ -73,6 +123,7 @@ while($row = mysqli_fetch_array($result))
                     echo "<tr>";
 
                     echo '
+                    <td style="display:none;">'.$row["id"].'</td>
                     <td>'.$row["date"].'</td>
                     <td>'.$row["entity_name"].'</td>
                     <td>'.$row["fund_cluster"].'</td>
@@ -85,12 +136,17 @@ while($row = mysqli_fetch_array($result))
 
                  echo"   <td>
                     <a rel='facebox' target='_blank' href='printing.php?id=".$row['id']."'>
-                    <button type='button' class='btn btn-warning genbtn fw-bold'> <i class='fa fa-print' style='font-size:36px' alt='PRINT'></i> </button></a>
+                    <button type='button' class='btn btn-warning genbtn fw-bold'> <i class='fa fa-print' style='font-size:30px' alt='PRINT'></i> </button></a>
                 </td>";
 
                 echo'    <td>
+                    <a href="" data-id="'.$row['id'].'"  class="btn btn-secondary editbtn fw-bold"  data-bs-toggle="modal"
+                data-bs-target="#editModal"><i class="fa fa-edit" style="font-size:30px" ></i></a>
+                </td>';
+
+                echo'    <td>
                     <a href="" data-id="'.$row['id'].'"  class="btn btn-danger trash fw-bold"  data-bs-toggle="modal"
-                data-bs-target="#logoutModal"> <i class="fa fa-remove trash" style="font-size:36px" ></i></a>
+                data-bs-target="#logoutModal"> <i class="fa fa-remove trash" style="font-size:30px" ></i></a>
                 </td>';
                 
 
@@ -133,6 +189,83 @@ while($row = mysqli_fetch_array($result))
         </div>
     </div>
 
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg fw-bold" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="exampleModalLabel">Edit Stock Card Information</h5>
+                </div>
+
+                <form action="dashboard.php" method="POST">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+
+                            <input type="hidden" name="id" id="id" value="id" readonly="readonly"  class="form-control"
+                                >
+                        </div>
+                       
+                        <div class="form-group">
+                            <label> Date </label>
+                            <input name="date" id="date" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Entity Name </label>
+                            <input name="entity" id="entity_name" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Fund Cluster </label>
+                            <input name="cluster" id="fund_cluster" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Item </label>
+                            <input name="item" id="item" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Description </label>
+                            <input name="descrip" id="descrip" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Unit of Measurement </label>
+                            <input name="unit" id="unit_m" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Stock No. </label>
+                            <input name="stock_no" id="stock_no" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                        <div class="form-group">
+                            <label> Re-order Point. </label>
+                            <input name="re_order" id="re_order" value="firstName"   class="form-control"
+                                >
+                        </div>
+
+                    <div class="modal-footer fw-bold">
+                        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="editinfo" class="btn btn-primary">Save Information</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 
@@ -143,6 +276,36 @@ while($row = mysqli_fetch_array($result))
             var id=$(this).data('id');
             $('#modalDelete').attr('href','del.php?id='+id);
         })
+    </script>
+
+
+            <script>
+        $(document).ready(function () {
+
+            $('.editbtn').on('click', function () {
+
+                $('#editModal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#id').val(data[0]);
+                $('#date').val(data[1]);
+                $('#entity_name').val(data[2]);
+                $('#fund_cluster').val(data[3]);
+                $('#item').val(data[4]);
+                $('#descrip').val(data[5]);
+                $('#unit_m').val(data[6]);
+                $('#stock_no').val(data[7]);
+                $('#re_order').val(data[8]);
+
+            });
+        });
     </script>
 
 </body>

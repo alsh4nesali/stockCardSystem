@@ -14,13 +14,18 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <style>
+        body{
+            background-color: #BDCDD6 !important;
+        }
+    </style>
 
 </head>
 
 <body>
 
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary p-4">
+<nav class="navbar navbar-expand-lg" style="background-color: #BDCDD6;">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="index.php"><img src="images/dpwh.svg" width="80px"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,13 +49,13 @@
       </form>-->
     </div>
   </div>
-</nav>
+</nav><hr>
 
-<h1 class="fw-bold">Archived Information</h1>
+<h3 class="fw-bold">Archived Stock Cards</h3>
 
 
                               <table class="table table-bordered text-center fw-bold" width="100%" cellspacing="0" style="color: black;">
-                                    <thead class="">
+                                    <thead class="table-dark">
                                <tr>  
                                     <th>Date</th>
                                     <th>Entity Name</th>  
