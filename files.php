@@ -14,9 +14,16 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <style>
         body{
             background-color: #BDCDD6 !important;
+        }
+
+        .table td{
+
+            font-weight: bold;
         }
     </style>
 
@@ -25,7 +32,7 @@
 <body>
 
 
-<nav class="navbar navbar-expand-lg" style="background-color: #BDCDD6;">
+<nav class="navbar navbar-expand-lg p-3" style="background-color: #e3f2fd;">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="index.php"><img src="images/dpwh.svg" width="80px"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +46,6 @@
         <li class="nav-item">
           <a class="nav-link" href="index.php">Add Data</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="index.php">Previous Files</a>
-        </li>
       </ul>
       <!--<form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -49,14 +53,17 @@
       </form>-->
     </div>
   </div>
-</nav><hr>
-
-<h3 class="fw-bold">Archived Stock Cards</h3>
+</nav>
 
 
-                              <table class="table table-bordered text-center fw-bold" width="100%" cellspacing="0" style="color: black;">
-                                    <thead class="table-dark">
-                               <tr>  
+                    <div class="card shadow mb-4">
+
+                        <div class="card-body">
+                            <div class="">
+                                <table class="table table-bordered p-3" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                    <th style="display: none;"></th>
                                     <th>Date</th>
                                     <th>Entity Name</th>  
                                     <th>Fund Cluster</th>
@@ -65,21 +72,25 @@
                                      <th>Unit of Measurement</th> 
                                      <th>Stock No.</th>
                                      <th>Re-order Point</th>
-                                     <th>View</th>
                                      <th>PRINT</th>
-                               </tr>  
+                                     <th>View Info</th>
+
+                                        </tr>
                                     </thead>
+
+                                    <tbody>
     <?php
 include 'connection.php';
 
 $result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE flag =  '1' ORDER BY id DESC");
 
-
+if($result != null){
 while($row = mysqli_fetch_array($result))
   {
                     echo "<tr>";
 
                     echo '
+                    <td style="display:none;">'.$row["id"].'</td>
                     <td>'.$row["date"].'</td>
                     <td>'.$row["entity_name"].'</td>
                     <td>'.$row["fund_cluster"].'</td>
@@ -91,23 +102,33 @@ while($row = mysqli_fetch_array($result))
 
 
                  echo"   <td>
-                    <a rel='facebox' target='_blank' href='view.php?id=".$row['id']."' style='text-decoration:none;'>View Info</a>
-                </td>";
-                 echo"   <td>
                     <a rel='facebox' target='_blank' href='printing.php?id=".$row['id']."'>
-                    <button type='button' class='btn btn-warning genbtn fw-bold'> <i class='fa fa-print' style='font-size:36px' alt='PRINT'></i> </button></a>
+                    <button type='button' class='btn btn-warning genbtn fw-bold'> <i class='fa fa-print' style='font-size:30px' alt='PRINT'></i> </button></a>
                 </td>";
+
+                 echo"   <td>
+                    <a rel='facebox' target='_blank' href='view.php?id=".$row['id']."'>
+                    <button type='button' class='btn btn-secondary editbtn fw-bold'><i class='fa fa-info-circle' style='font-size:30px'></i></button></a>
+                </td>";
+
+
+                
+
 
                 echo "</tr>";
   }
-
+}else{
+    echo "No Records Found";
+}
 
 ?>
-                                      
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
 
-<br><br><br><br><br><br>
+<br><br><br><br>
 
 <div class="img">
 	<img src="images/wmsu.png" width="200px">
@@ -146,6 +167,19 @@ while($row = mysqli_fetch_array($result))
             var id=$(this).data('id');
             $('#modalDelete').attr('href','del.php?id='+id);
         })
+    </script>
+
+        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script >
+            $(document).ready( function () {
+        $('#dataTable').DataTable();
+    } );
+
+        $('#dataTable').dataTable( {
+          "lengthChange": false,
+          "pageLength": 6,
+           language: { search: "____Stock Card Search____" },
+        });
     </script>
 
 </body>

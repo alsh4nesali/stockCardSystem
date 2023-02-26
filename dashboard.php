@@ -58,10 +58,26 @@ if(isset($_POST['editinfo']))
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <style>
         body{
             background-color: #BDCDD6 !important;
         }
+
+
+
+        label{
+            padding-bottom: 0.5%;
+            font-weight: 800;
+        }
+
+
+        .table td{
+
+            font-weight: bold;
+        }
+
     </style>
 
 </head>
@@ -69,7 +85,7 @@ if(isset($_POST['editinfo']))
 <body>
 
 
-<nav class="navbar navbar-expand-lg " style="background-color: #BDCDD6;">
+<nav class="navbar navbar-expand-lg p-3" style="background-color: #e3f2fd;">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="index.php"><img src="images/dpwh.svg" width="80px"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,12 +109,16 @@ if(isset($_POST['editinfo']))
       </form>-->
     </div>
   </div>
-</nav><hr>
+</nav>
 
+                    <div class="card shadow mb-4">
 
-                              <table class="table table-bordered text-center fw-bold" width="100%" cellspacing="0" style="color: black;">
-                                    <thead class="table-dark">
-                               <tr>  
+                        <div class="card-body">
+                            <div class="">
+                                <table class="table table-bordered p-3" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                    <th style="display: none;"></th>
                                     <th>Date</th>
                                     <th>Entity Name</th>  
                                     <th>Fund Cluster</th>
@@ -110,14 +130,16 @@ if(isset($_POST['editinfo']))
                                      <th>PRINT</th>
                                      <th>EDIT</th>
                                      <th>DELETE</th>
-                               </tr>  
+                                        </tr>
                                     </thead>
+
+                                    <tbody>
     <?php
 include 'connection.php';
 
 $result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE flag =  '0' ORDER BY id DESC");
 
-
+if($result != null){
 while($row = mysqli_fetch_array($result))
   {
                     echo "<tr>";
@@ -153,14 +175,20 @@ while($row = mysqli_fetch_array($result))
 
                 echo "</tr>";
   }
-
+}else{
+    echo "No Records Found";
+}
 
 ?>
-                                      
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
 
-<br><br><br><br><br><br>
+
+
+<br><br><br><br>
 
 <div class="img">
 	<img src="images/wmsu.png" width="200px">
@@ -192,66 +220,66 @@ while($row = mysqli_fetch_array($result))
 
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg fw-bold" role="document">
+        <div class="modal-dialog modal-fullscreen-xl-down fw-bold" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold" id="exampleModalLabel">Edit Stock Card Information</h5>
                 </div>
 
                 <form action="dashboard.php" method="POST">
-                    <div class="modal-body">
+                    <div class="modal-body ">
 
                         <div class="form-group">
 
-                            <input type="hidden" name="id" id="id" value="id" readonly="readonly"  class="form-control"
+                            <input type="hidden" name="id" id="id" value="id" readonly="readonly"  class="form-control "
                                 >
                         </div>
                        
                         <div class="form-group">
                             <label> Date </label>
-                            <input name="date" id="date" value="firstName"   class="form-control"
+                            <input name="date" id="date" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Entity Name </label>
-                            <input name="entity" id="entity_name" value="firstName"   class="form-control"
+                            <input name="entity" id="entity_name" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Fund Cluster </label>
-                            <input name="cluster" id="fund_cluster" value="firstName"   class="form-control"
+                            <input name="cluster" id="fund_cluster" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Item </label>
-                            <input name="item" id="item" value="firstName"   class="form-control"
+                            <input name="item" id="item" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Description </label>
-                            <input name="descrip" id="descrip" value="firstName"   class="form-control"
+                            <input name="descrip" id="descrip" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Unit of Measurement </label>
-                            <input name="unit" id="unit_m" value="firstName"   class="form-control"
+                            <input name="unit" id="unit_m" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Stock No. </label>
-                            <input name="stock_no" id="stock_no" value="firstName"   class="form-control"
+                            <input name="stock_no" id="stock_no" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
                             <label> Re-order Point. </label>
-                            <input name="re_order" id="re_order" value="firstName"   class="form-control"
+                            <input name="re_order" id="re_order" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
@@ -268,6 +296,8 @@ while($row = mysqli_fetch_array($result))
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
@@ -305,6 +335,19 @@ while($row = mysqli_fetch_array($result))
                 $('#re_order').val(data[8]);
 
             });
+        });
+    </script>
+
+    <script >
+            $(document).ready( function () {
+        $('#dataTable').DataTable();
+    } );
+
+
+        $('#dataTable').dataTable( {
+          "lengthChange": false,
+          "pageLength": 6,
+           language: { search: "____Stock Card Search____" },
         });
     </script>
 

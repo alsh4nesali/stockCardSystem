@@ -58,17 +58,36 @@ if(isset($_POST['send']))
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 	<style>
-		body{
-			background-color: #BDCDD6 !important;
-		}
+        .page-bg {
+              background:url('../images/dpwh.jpg');
+              filter: brightness(40%);
+              background-size: cover;
+              position: fixed;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
+              z-index: -1;
+        }
+
+        .field_set{
+        	background-color: #fff;
+        	border-radius: 25px;
+        	padding: 2%;
+        }
+
+        .field_set legend{
+        	font-weight: bold;
+        }
 	</style>
 
 </head>
 
 <body>
 
+<div class="page-bg"></div>
 
-<fieldset class="field_set">
+<fieldset class="field_set shadow">
 	<legend>Stock Card<br>SPMS</legend>
 
 	<a href="dashboard.php"><button class="btn btn-primary">Dashboard</button></a>
@@ -147,9 +166,8 @@ if(isset($_POST['send']))
 	    <button type="submit" name="send" class="btn btn-primary insertbtn">Save Information</button>
 	  </div>
 	</form>
-</fieldset><br><br>
 
-<div class="img">
+	<div class="img">
 	<img src="images/wmsu.png" width="200px">
 	<img src="images/remove.png" width="200px">
 	<img src="images/dpwh.svg" width="200px">
@@ -157,6 +175,9 @@ if(isset($_POST['send']))
 	<p>College of Computing Studies 2023</p>
 	<br><br>
 </div>
+</fieldset><br><br>
+
+
 
 </body>
 
