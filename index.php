@@ -6,28 +6,27 @@ if(isset($_POST['send']))
 {
 	$entity = $_POST['entity'];
 	$cluster = $_POST['cluster'];
+	$equipment = $_POST['equipment'];
+	$property = $_POST['property_no'];
 	$descrip = $_POST['descrip'];
-	$item = $_POST['item'];
-	$unit = $_POST['unit'];
-	$stock_no = $_POST['stock_no'];
-	$re_order = $_POST['re_order'];
 	$date = $_POST['date'];
 	$reference = $_POST['reference'];
 	$receipt_qty = $_POST['receipt_qty'];
-	$issue_qty = $_POST['issue_qty'];
-	$issue_office = $_POST['issue_office'];
-	$balance_qty = $_POST['balance_qty'];
-	$consume = $_POST['consume'];
+	$qty = $_POST['qty'];
+	$amount = $_POST['amount'];
+	$disposal = $_POST['disposal'];
+	$balance = $_POST['balance'];
+	$remarks = $_POST['remarks'];
 
 	    
-        $stmt = $conn->prepare("INSERT INTO `tbl_stocks`(`entity_name`,`fund_cluster`,`item`,`descrip`,`unit_m`,`stock_no`,`re_order`,`date`,`reference`,`receipt_qty`,`issue_qty`,`issue_office`,`balance_qty`,`consume`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO `tbl_cards`(`date`,`entity_name`,`fund_cluster`,`equipment`,`property_no`,`descrip`,`referencenum`,`receipt`,`qty`,`itd`,`balance`,`amount`,`remarks`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-        $stmt->bind_param("ssssssssssssss",$entity,$cluster,$item,$descrip,$unit,$stock_no,$re_order,$date,$reference,$receipt_qty,$issue_qty,$issue_office,$balance_qty,$consume);
+        $stmt->bind_param("sssssssssssss",$date,$entity,$cluster,$equipment,$property,$descrip,$reference,$receipt_qty,$qty,$disposal,$balance,$amount,$remarks);
         $stmt->execute();
         
         
-        $var = 'Stock Card has been saved!';
-        $message = 'Proceed to the dashboard to print the stock card information!';
+        $var = 'Property Card has been saved!';
+        $message = 'Proceed to the dashboard to view and print the Property Card information';
 
             echo '<script type="text/javascript">';
             echo "setTimeout(function () { swal('$var','$message','success')";
@@ -46,7 +45,7 @@ if(isset($_POST['send']))
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>SPMS Stock Cards</title>
+	<title>SPMS Property Cards</title>
 
 	<script src="js/sweetalert.min.js"></script>
 
@@ -59,7 +58,7 @@ if(isset($_POST['send']))
 
 	<style>
         .page-bg {
-              background:url('../images/dpwh.jpg');
+              background:url('images/dpwh.jpg');
               filter: brightness(40%);
               background-size: cover;
               position: fixed;
@@ -79,6 +78,10 @@ if(isset($_POST['send']))
         .field_set legend{
         	font-weight: bold;
         }
+
+        label{
+        	font-weight: bold;
+        }
 	</style>
 
 </head>
@@ -88,7 +91,7 @@ if(isset($_POST['send']))
 <div class="page-bg"></div>
 
 <fieldset class="field_set shadow">
-	<legend>Stock Card<br>SPMS</legend>
+	<legend>Property Card<br>Supply and Property Management Section</legend><br><br>
 
 	<a href="dashboard.php"><button class="btn btn-primary">Dashboard</button></a>
 	<hr>
@@ -105,60 +108,59 @@ if(isset($_POST['send']))
 	  </div>
 
 	  <div class="col-md-6">
-	    <label for="inputEmail4" class="form-label">Item</label>
-	    <input type="text" name="item" class="form-control" id="inputEmail4" required>
+	    <label for="inputEmail4" class="form-label">Property,Plant and Equipment</label>
+	    <input type="text" name="equipment" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
-	    <label for="inputPassword4" class="form-label">Description</label>
-	    <input type="text" name="descrip" class="form-control" id="inputPassword4" required>
+	    <label for="inputPassword4" class="form-label">Property No</label>
+	    <input type="text" name="property_no" class="form-control" id="inputPassword4" required>
 	  </div>
 
 	  <div class="col-md-6">
-	    <label for="inputEmail4" class="form-label">Unit of Measurement</label>
-	    <input type="text" name="unit" class="form-control" id="inputEmail4" required>
+	    <label for="inputEmail4" class="form-label">Description</label>
+	    <input type="text" name="descrip" class="form-control" id="inputEmail4" required>
 	  </div>
 
 	  <div class="col-md-6">
-	    <label for="inputEmail4" class="form-label">Stock No.</label>
-	    <input type="text" name="stock_no" class="form-control" id="inputEmail4" required>
+	    <label for="inputEmail4" class="form-label">Referrence/PAR No.</label>
+	    <input type="text" name="reference" class="form-control" id="inputEmail4" required>
 	  </div>
 
-	  <div class="col-md-6">
-	    <label for="inputCity" class="form-label">Re-order Point.</label>
-	    <input type="text" name="re_order" class="form-control" id="inputCity" required>
-	  </div>
 	  	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Date</label>
 	    <input type="text" name="date" value="<?php echo date("d-m-Y"); ?>" class="form-control" id="inputCity" required>
 	  </div>
-	  	  <div class="col-md-6">
-	    <label for="inputCity" class="form-label">Reference</label>
-	    <input type="text" name="reference" class="form-control" id="inputCity" required>
-	  </div>
-	  	  <div class="col-md-6">
+
+
+	  <div class="col-md-6">
 	    <label for="inputCity" class="form-label">Receipt/Qty</label>
 	    <input type="text" name="receipt_qty" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
-	    <label for="inputCity" class="form-label">Issue/Qty</label>
-	    <input type="text" name="issue_qty" class="form-control" id="inputCity" required>
+	    <label for="inputCity" class="form-label">Quantity</label>
+	    <input type="text" name="qty" class="form-control" id="inputCity" required>
+	  </div>
+	  
+	  	  <div class="col-md-6">
+	    <label for="inputCity" class="form-label">Balance</label>
+	    <input type="text" name="balance" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
-	    <label for="inputCity" class="form-label">Issue/Office</label>
-	    <input type="text" name="issue_office" class="form-control" id="inputCity" required>
+	    <label for="inputCity" class="form-label">Amount</label>
+	    <input type="text" name="amount" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
-	    <label for="inputCity" class="form-label">Balance/Qty</label>
-	    <input type="text" name="balance_qty" class="form-control" id="inputCity" required>
+	    <label for="inputCity" class="form-label">Remarks</label>
+	    <input type="text" name="remarks" class="form-control" id="inputCity" required>
 	  </div>
 
 	  	  <div class="col-md-6">
-	    <label for="inputCity" class="form-label">No. of Days to Consume</label>
-	    <input type="text" name="consume" class="form-control" id="inputCity" required>
+	    <label for="inputCity" class="form-label">Issue/Transfer/Disposal</label>
+	    <textarea class="form-control" name="disposal" id="floatingTextarea2" style="height: 100px"></textarea>
 	  </div>
 
 
@@ -170,7 +172,7 @@ if(isset($_POST['send']))
 	<div class="img">
 	<img src="images/wmsu.png" width="200px">
 	<img src="images/remove.png" width="200px">
-	<img src="images/dpwh.svg" width="200px">
+
 	<p>&#169; Western Mindanao State University Interns</p>
 	<p>College of Computing Studies 2023</p>
 	<br><br>
@@ -178,6 +180,8 @@ if(isset($_POST['send']))
 </fieldset><br><br>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </body>
 

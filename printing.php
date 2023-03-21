@@ -2,23 +2,25 @@
   include 'connection.php';
 
   $id = $_GET['id'];
-$result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE id = '$id'");
+$result = mysqli_query($connection,"SELECT * FROM tbl_cards WHERE id = '$id'");
 $test = mysqli_fetch_array($result);
 
-	$entity = $test['entity_name'];
-	$cluster = $test['fund_cluster'];
-	$descrip = $test['descrip'];
-	$item = $test['item'];
-	$unit = $test['unit_m'];
-	$stock_no = $test['stock_no'];
-	$re_order = $test['re_order'];
+
 	$date = $test['date'];
-	$reference = $test['reference'];
-	$receipt_qty = $test['receipt_qty'];
-	$issue_qty = $test['issue_qty'];
-	$issue_office = $test['issue_office'];
-	$balance_qty = $test['balance_qty'];
-	$consume = $test['consume'];
+
+	$entity = $test['entity_name'];
+	$fund = $test['fund_cluster'];
+	$equipment = $test['equipment'];
+	$property_no = $test['property_no'];
+	$descrip = $test['descrip'];
+
+	$reference = $test['referencenum'];
+	$receipt_qty = $test['receipt/qty'];
+	$qty = $test['qty'];
+	$itd = $test['itd'];
+	$balance = $test['balance'];
+	$amount = $test['amount'];
+	$remarks = $test['remarks'];
 
 ?>
 
@@ -36,65 +38,128 @@ $test = mysqli_fetch_array($result);
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 
+	<style>
+
+
+
+		.myImages{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.myImages img{
+				margin: 1%;
+		}
+
+		.myText{
+			font-size: 12px;
+			font-weight: 700;
+			text-align: center;
+		}
+
+		.myText h4{
+			font-weight: 700;
+			font-size: 10px;
+			text-align: center;
+		}
+
+
+
+	</style>
 
 
 </head>
 
 <body>
 
-<h1>Stock Card</h1>
-<h3>SPMS</h3>
-<hr>
+<p style="float: right;">Appendix 69</p>
+<br><br>
+
+
+<div class="myImages ">
+<img src="images/dpwh.svg" width="80px">
+
+<div class="myText">
+<p>Republic of the Philippines</p>
+<h4>DEPARTMENT OF PUBLIC WORKS AND HIGHWAYS</h4>
+<h4>REGIONAL OFFICE IX</h4>
+<p>Veterans Avenue Extension, Tetuan, Zamboanga City</p>
+
+	</div>
+
+</div><br>
+
+<h2 class="fw-bold text-center">PROPERTY CARD</h2>
+<br><br>
 <div class="ulabel">
-<label>Entity Name: <?php echo $entity; ?></label>
-<label style="margin-left: 30%; float: right;">Fund Cluster: <?php echo $cluster; ?></label>
+<label><strong>Entity Name: </strong><?php echo $entity; ?></label>
+<label style="float: right;"><strong>Fund Cluster: </strong> <?php echo $entity; ?></label>
 </div>
 <p></p>
-<table class="table">
-
-	<thead>
-		<th>Item :</th>
-		<td><?php echo $item; ?></td>
-		<th>Stock No :</th>
-		<td><?php echo $stock_no; ?></td>
-	</thead>
+<hr>
+<table class="table fw-bold" style="width:100%">
 
 	<tr>
-		<th>Description :</th>
-		<td><?php echo $descrip; ?></td>
-		<th>Re-order Point :</th>
-		<td><?php echo $re_order; ?></td>
-	</tr>
+<label><strong>Property,Plant and Equipment:</strong>  <?php echo $equipment; ?></label>
 
-	<tr>
-		<th>Unit of Measurement :</th>
-		<td><?php echo $unit; ?></td>
-	</tr>
+<label style="float:right;"><strong>Property No: </strong><?php echo $property_no; ?></label>
+
+<br>
+<label style="margin-right: 30%;"><strong>Description: </strong> <?php echo $descrip; ?></label>
+<hr>
+
+
+
+
 
 	<tr>
 		<th>Date</th>
-		<th>Reference</th>
+		<th>Reference/PAR No.</th>
 		<th>Receipt/Qty</th>
-		<th>Issue/Qty</th>
-		<th>Issue/Office</th>
-		<th>Balance/Qty</th>
-		<th>No. of Days to Consume</th>
+		<th>Qty</th>
+		<th>Issue/Transfer/Disposal<br>Office/Officer</th>
+		<th>Balance</th>
+		<th>Amount</th>
+		<th>Remarks</th>
 	</tr>
 
+<?php
+include 'connection.php';
+
+$result = mysqli_query($connection,"SELECT * FROM tbl_cards WHERE id = '$id'");
+
+if($result != null){
+while($row = mysqli_fetch_array($result))
+  {
+
+?>
+
 	<tr>
-		<td><?php echo $date; ?></td>
-		<td><?php echo $reference; ?></td>
-		<td><?php echo $receipt_qty; ?></td>
-		<td><?php echo $issue_qty; ?></td>
-		<td><?php echo $issue_office; ?></td>
-		<td><?php echo $balance_qty; ?></td>
-		<td><?php echo $consume; ?></td>
+		<td><?php echo $row['date']; ?></td>
+		<td><?php echo $row['referencenum']; ?></td>
+		<td><?php echo $row['receipt/qty']; ?></td>
+		<td><?php echo $row['qty']; ?></td>
+		<td style="font-size: 13px;"><?php echo $row['itd']; ?></td>
+		<td><?php echo $row['balance']; ?></td>
+		<td><?php echo $row['amount']; ?></td>
+		<td><?php echo $row['remarks']; ?></td>
 	</tr>
+
+<?php
+
+}
+};
+
+?>	
+
+	
 </table>
 
 <script>
-    window.print();
+	window.print()
 </script>
+
 
 </body>
 </html>

@@ -8,22 +8,22 @@ if(isset($_POST['editinfo']))
     $id = $_POST['id'];
 
     $entity = $_POST['entity'];
-    $cluster = $_POST['cluster'];
-    $descrip = $_POST['descrip'];
-    $item = $_POST['item'];
-    $unit = $_POST['unit'];
-    $stock_no = $_POST['stock_no'];
-    $re_order = $_POST['re_order'];
-    $date = $_POST['date'];
+    $reference = $_POST['reference'];
+    $receipt = $_POST['receipt_qty'];
+    $qty = $_POST['qty'];
+    $itd = $_POST['itd'];
+    $balance = $_POST['balance'];
+    $amount = $_POST['amount'];
+    $remarks = $_POST['remarks'];
 
-    $query = "UPDATE tbl_stocks SET entity_name = '$entity' ,fund_cluster = '$cluster',item = '$item' ,descrip = '$descrip', unit_m = '$unit', stock_no = '$stock_no', re_order = '$re_order', date = '$date' WHERE id='$id'";
+    $query = "UPDATE tbl_cards SET entity_name = '$entity' ,referencenum = '$reference', receipt = '$receipt', qty = '$qty', itd = '$itd', balance = '$balance', amount = '$amount', remarks = '$remarks' WHERE id='$id' ";
 
     $query_run = mysqli_query($connection, $query);
 
     if($query_run)
         {
         $var = 'Information has been saved!';
-        $message = 'Stock card information has been changed...';
+        $message = 'Property Card information has been changed...';
 
             echo '<script type="text/javascript">';
             echo "setTimeout(function () { swal('$var','$message','success')";
@@ -118,18 +118,19 @@ if(isset($_POST['editinfo']))
                                 <table class="table table-bordered p-3" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                    <th style="display: none;"></th>
-                                    <th>Date</th>
-                                    <th>Entity Name</th>  
-                                    <th>Fund Cluster</th>
-                                    <th>Item</th>  
-                                    <th>Description</th>  
-                                     <th>Unit of Measurement</th> 
-                                     <th>Stock No.</th>
-                                     <th>Re-order Point</th>
-                                     <th>PRINT</th>
-                                     <th>EDIT</th>
-                                     <th>DELETE</th>
+        <th>Date</th>
+        <th>Entity Name</th>
+        <th>Reference/PAR No.</th>
+        <th>Receipt/Qty</th>
+        <th>Qty</th>
+        <th>Issue/Transfer/Disposal<br>Office/Officer</th>
+        <th>Balance</th>
+        <th>Amount</th>
+        <th>Remarks</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th style="display: none;"></th>
                                         </tr>
                                     </thead>
 
@@ -137,7 +138,7 @@ if(isset($_POST['editinfo']))
     <?php
 include 'connection.php';
 
-$result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE flag =  '0' ORDER BY id DESC");
+$result = mysqli_query($connection,"SELECT * FROM tbl_cards WHERE flag = 0 ORDER BY id DESC");
 
 if($result != null){
 while($row = mysqli_fetch_array($result))
@@ -148,12 +149,13 @@ while($row = mysqli_fetch_array($result))
                     <td style="display:none;">'.$row["id"].'</td>
                     <td>'.$row["date"].'</td>
                     <td>'.$row["entity_name"].'</td>
-                    <td>'.$row["fund_cluster"].'</td>
-                    <td>'.$row["item"].'</td>
-                    <td>'.$row["descrip"].'</td>
-                    <td>'.$row["unit_m"].'</td>
-                    <td>'.$row["stock_no"].'</td>
-                    <td>'.$row["re_order"].'</td>';
+                    <td>'.$row["referencenum"].'</td>
+                    <td>'.$row["receipt"].'</td>
+                    <td>'.$row["qty"].'</td>
+                    <td>'.$row["itd"].'</td>
+                    <td>'.$row["balance"].'</td>
+                    <td>'.$row["amount"].'</td>
+                    <td>'.$row["remarks"].'</td>';
 
 
                  echo"   <td>
@@ -193,7 +195,6 @@ while($row = mysqli_fetch_array($result))
 <div class="img">
 	<img src="images/wmsu.png" width="200px">
 	<img src="images/remove.png" width="200px">
-	<img src="images/dpwh.svg" width="200px">
 	<p>&#169; Western Mindanao State University Interns</p>
 	<p>College of Computing Studies 2023</p>
 	<br><br>
@@ -235,9 +236,9 @@ while($row = mysqli_fetch_array($result))
                                 >
                         </div>
                        
-                        <div class="form-group">
+                        <div class="form-group" style="display:none;">
                             <label> Date </label>
-                            <input name="date" id="date" value="firstName"   class="form-control fw-bold"
+                            <input name="date" id="date"    class="form-control fw-bold"
                                 >
                         </div>
 
@@ -248,39 +249,43 @@ while($row = mysqli_fetch_array($result))
                         </div>
 
                         <div class="form-group">
-                            <label> Fund Cluster </label>
-                            <input name="cluster" id="fund_cluster" value="firstName"   class="form-control fw-bold"
+                            <label> Referrence/PAR No. </label>
+                            <input name="reference" id="referencenum" value="firstName"   class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
-                            <label> Item </label>
-                            <input name="item" id="item" value="firstName"   class="form-control fw-bold"
+                            <label> Receipt/Qty </label>
+                            <input name="receipt_qty" id="receipt" class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
-                            <label> Description </label>
-                            <input name="descrip" id="descrip" value="firstName"   class="form-control fw-bold"
+                            <label> Qty </label>
+                            <input name="qty" id="qty" class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
-                            <label> Unit of Measurement </label>
-                            <input name="unit" id="unit_m" value="firstName"   class="form-control fw-bold"
+                            <label> Issue/Transfer/Disposal </label>
+                            <textarea name="itd" class="form-control fw-bold" id="itd" rows="6"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Balance </label>
+                            <input name="balance" id="balance"  class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
-                            <label> Stock No. </label>
-                            <input name="stock_no" id="stock_no" value="firstName"   class="form-control fw-bold"
+                            <label> Amount </label>
+                            <input name="amount" id="amount" class="form-control fw-bold"
                                 >
                         </div>
 
                         <div class="form-group">
-                            <label> Re-order Point. </label>
-                            <input name="re_order" id="re_order" value="firstName"   class="form-control fw-bold"
-                                >
+                            <label> Remarks </label>
+                            <textarea name="remarks" class="form-control fw-bold" id="remarks" rows="6"></textarea>
                         </div>
 
                     <div class="modal-footer fw-bold">
@@ -312,7 +317,7 @@ while($row = mysqli_fetch_array($result))
             <script>
         $(document).ready(function () {
 
-            $('.editbtn').on('click', function () {
+            $('body').on('click','.editbtn', function () {
 
                 $('#editModal').modal('show');
 
@@ -327,12 +332,16 @@ while($row = mysqli_fetch_array($result))
                 $('#id').val(data[0]);
                 $('#date').val(data[1]);
                 $('#entity_name').val(data[2]);
-                $('#fund_cluster').val(data[3]);
-                $('#item').val(data[4]);
-                $('#descrip').val(data[5]);
-                $('#unit_m').val(data[6]);
-                $('#stock_no').val(data[7]);
-                $('#re_order').val(data[8]);
+                $('#referencenum').val(data[3]);
+                $('#receipt').val(data[4]);
+                $('#qty').val(data[5]);
+                $('#itd').val(data[6]);
+                $('#balance').val(data[7]);
+                $('#amount').val(data[8]);
+                $('#remarks').val(data[9]);
+
+
+
 
             });
         });
@@ -346,10 +355,12 @@ while($row = mysqli_fetch_array($result))
 
         $('#dataTable').dataTable( {
           "lengthChange": false,
-          "pageLength": 6,
-           language: { search: "____Stock Card Search____" },
+          "pageLength": 10,
+           language: { search: "__Property Card Search__" },
         });
     </script>
+
+
 
 </body>
 

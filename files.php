@@ -63,17 +63,20 @@
                                 <table class="table table-bordered p-3" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                    <th style="display: none;"></th>
-                                    <th>Date</th>
-                                    <th>Entity Name</th>  
-                                    <th>Fund Cluster</th>
-                                    <th>Item</th>  
-                                    <th>Description</th>  
-                                     <th>Unit of Measurement</th> 
-                                     <th>Stock No.</th>
-                                     <th>Re-order Point</th>
-                                     <th>PRINT</th>
-                                     <th>View Info</th>
+        <th>Date</th>
+        <th>Entity Name</th>
+        <th>Reference/PAR No.</th>
+        <th>Receipt/Qty</th>
+        <th>Qty</th>
+        <th>Issue/Transfer/Disposal<br>Office/Officer</th>
+        <th>Balance</th>
+        <th>Amount</th>
+        <th>Remarks</th>
+        <th></th>
+        <th></th>
+        <th></th>
+
+        <th style="display: none;"></th>
 
                                         </tr>
                                     </thead>
@@ -82,7 +85,7 @@
     <?php
 include 'connection.php';
 
-$result = mysqli_query($connection,"SELECT * FROM tbl_stocks WHERE flag =  '1' ORDER BY id DESC");
+$result = mysqli_query($connection,"SELECT * FROM tbl_cards WHERE flag = 1 ORDER BY id DESC");
 
 if($result != null){
 while($row = mysqli_fetch_array($result))
@@ -93,12 +96,13 @@ while($row = mysqli_fetch_array($result))
                     <td style="display:none;">'.$row["id"].'</td>
                     <td>'.$row["date"].'</td>
                     <td>'.$row["entity_name"].'</td>
-                    <td>'.$row["fund_cluster"].'</td>
-                    <td>'.$row["item"].'</td>
-                    <td>'.$row["descrip"].'</td>
-                    <td>'.$row["unit_m"].'</td>
-                    <td>'.$row["stock_no"].'</td>
-                    <td>'.$row["re_order"].'</td>';
+                    <td>'.$row["referencenum"].'</td>
+                    <td>'.$row["receipt"].'</td>
+                    <td>'.$row["qty"].'</td>
+                    <td>'.$row["itd"].'</td>
+                    <td>'.$row["balance"].'</td>
+                    <td>'.$row["amount"].'</td>
+                    <td>'.$row["remarks"].'</td>';
 
 
                  echo"   <td>
@@ -112,6 +116,10 @@ while($row = mysqli_fetch_array($result))
                 </td>";
 
 
+                 echo"   <td>
+                    <a rel='facebox' href='restore.php?id=".$row['id']."'>
+                    <button type='button' class='btn btn-success editbtn fw-bold'><i class='fa fa-window-restore' style='font-size:30px'></i></button></a>
+                </td>";
                 
 
 
@@ -133,7 +141,7 @@ while($row = mysqli_fetch_array($result))
 <div class="img">
 	<img src="images/wmsu.png" width="200px">
 	<img src="images/remove.png" width="200px">
-	<img src="images/dpwh.svg" width="200px">
+
 	<p>&#169; Western Mindanao State University Interns</p>
 	<p>College of Computing Studies 2023</p>
 	<br><br>
